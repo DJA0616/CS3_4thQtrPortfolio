@@ -46,6 +46,9 @@
 </body>
 
 <script>
+    // Star rating functionality
+
+    // Select all star buttons and initialize selected rating
     const starButtons = document.querySelectorAll('.star');
     let selectedRating = 0;
 
@@ -56,6 +59,7 @@
         });
     });
 
+    // Function to update the star display based on the selected rating
     function updateStarDisplay() {
         starButtons.forEach(button => {
             const value = parseInt(button.getAttribute('data-value'));
@@ -67,6 +71,7 @@
         });
     }
 
+    // Form submission handling
     const addMovieForm = document.getElementById('addMovieForm');
     addMovieForm.addEventListener('submit', (e) => {
         e.preventDefault();
@@ -81,14 +86,25 @@
         let movies = JSON.parse(localStorage.getItem(KEY)) || [];
         movies.push(newMovie);
         localStorage.setItem(KEY, JSON.stringify(movies));
+        
+        // Clear form fields and reset star rating after submission
+        addMovieForm.reset();
+        selectedRating = 0;
+        updateStarDisplay();
+
+        // After adding a new movie, call the displayMovies function to update the movie list displayed on the page.
         displayMovies();
     });
+
+    // Function to display movies from localStorage
+    // This function retrieves the movies from localStorage, creates elements for each movie, and appends them to the movies container.
 
     function displayMovies() {
         const moviesContainer = document.getElementById('moviesContainer');
         moviesContainer.innerHTML = '';
         const movies = JSON.parse(localStorage.getItem('movies')) || [];
         movies.forEach(movie => {
+            // create new div element for each movie and set its text content to display the movie's title, year, genre, and rating. The rating is displayed as stars (★) based on the rating value.
             const movieElement = document.createElement('div');
             movieElement.textContent = `Title: ${movie.title}, (${movie.year}) -\nGenre: ${movie.genre}, Rating:`;
             for (let i = 0; i < movie.rating; i++) {
@@ -100,7 +116,7 @@
         });
     }
 
-    // Display movies on page load
+    // Display movies on page load, in addition to after adding a new movie, to ensure the list is always up to date.
     displayMovies();
 </script>
 </html>
