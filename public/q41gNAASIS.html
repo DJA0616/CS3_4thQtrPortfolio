@@ -1,0 +1,106 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="style.css">
+    <title>Document</title>
+</head>
+<body>
+    <form id="addMovieForm" class="form-container">
+        <h2 style="margin: 0 auto">Add Movie</h2>
+        <label for="title">Title:</label>
+        <input type="text" id="title" name="title" required>
+
+        <label for="year">Year:</label>
+        <input type="text" id="year" name="year" required>
+
+        <label for="genre">Genre:</label>
+        <select id="genre" name="genre" required>
+            <option value="">Select Genre</option>
+            <option value="action">Action</option>
+            <option value="comedy">Comedy</option>
+            <option value="drama">Drama</option>
+            <option value="horror">Horror</option>
+            <option value="sci-fi">Sci-Fi</option>
+        </select>
+
+        <label for="rating">Select Rating:</label>
+        <div id="starSelector" style="display: flex; gap: 20px;">
+            <button type="button" class="star" data-value="1">&#9733;</button>
+            <button type="button" class="star" data-value="2">&#9733;</button>
+            <button type="button" class="star" data-value="3">&#9733;</button>
+            <button type="button" class="star" data-value="4">&#9733;</button>
+            <button type="button" class="star" data-value="5">&#9733;</button>
+        </div>
+
+        <button type="submit">Add Movie</button>
+    </form>
+
+    <br>
+
+    <section id="movieList" class="form-container">
+        <h2 style="margin: 0 auto">Movie List</h2>
+        <div id="moviesContainer"></div>
+    </section>
+</body>
+
+<script>
+    const starButtons = document.querySelectorAll('.star');
+    let selectedRating = 0;
+
+    starButtons.forEach(button => {
+        button.addEventListener('click', () => {
+            selectedRating = parseInt(button.getAttribute('data-value'));
+            updateStarDisplay();
+        });
+    });
+
+    function updateStarDisplay() {
+        starButtons.forEach(button => {
+            const value = parseInt(button.getAttribute('data-value'));
+            if (value <= selectedRating) {
+                button.classList.add('selected-rating');
+            } else {
+                button.classList.remove('selected-rating');
+            }
+        });
+    }
+
+    const addMovieForm = document.getElementById('addMovieForm');
+    addMovieForm.addEventListener('submit', (e) => {
+        e.preventDefault();
+        const title = document.getElementById('title').value;
+        const year = document.getElementById('year').value;
+        const genre = document.getElementById('genre').value;
+
+        console.log(`Title: ${title}, Year: ${year}, Genre: ${genre}, Rating: ${selectedRating}`);
+        
+        const KEY = 'movies';
+        const newMovie = { title, year, genre, rating: selectedRating };
+        let movies = JSON.parse(localStorage.getItem(KEY)) || [];
+        movies.push(newMovie);
+        localStorage.setItem(KEY, JSON.stringify(movies));
+        displayMovies();
+    });
+
+    function displayMovies() {
+        const moviesContainer = document.getElementById('moviesContainer');
+        moviesContainer.innerHTML = '';
+        const movies = JSON.parse(localStorage.getItem('movies')) || [];
+        movies.forEach(movie => {
+            const movieElement = document.createElement('div');
+            movieElement.textContent = `Title: ${movie.title}, (${movie.year}) -\nGenre: ${movie.genre}, Rating:`;
+            for (let i = 0; i < movie.rating; i++) {
+                movieElement.textContent += ' ★';
+            }
+            movieElement.classList.add('movie-item');
+            movieElement.style.whiteSpace = 'pre-line';
+            moviesContainer.appendChild(movieElement);
+        });
+    }
+
+    // Display movies on page load
+    displayMovies();
+</script>
+</html>
