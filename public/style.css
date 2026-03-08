@@ -461,3 +461,26 @@ var {
     font-style: italic;
     color: #4CAF50;
 }
+
+/* ===== Webkit Fixes ===== */
+::-webkit-scrollbar {
+    width: 12px;
+}
+
+::-webkit-scrollbar-track {
+    background: #f1f1f1;
+}
+
+::-webkit-scrollbar-thumb {
+    background: #4CAF50;
+    border-radius: 6px;
+}
+
+::-webkit-scrollbar-thumb:hover {
+    background: #45a049;
+}
+
+::-webkit-outer-spin-button, ::-webkit-inner-spin-button {
+    -webkit-appearance: none;
+    margin: 0;
+}
