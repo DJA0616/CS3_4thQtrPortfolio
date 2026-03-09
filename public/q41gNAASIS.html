@@ -4,7 +4,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="stylesheet" href="style.css">
-    <title>Document</title>
+    <title>Movie Lists</title>
 </head>
 <body>
     <header style="position: sticky; top: 0; background-color: #f1f1f1; padding: 30px;">
@@ -162,7 +162,7 @@
         movies.forEach(movie => {
             // create new div element for each movie and set its text content to display the movie's title, year, genre, and rating. The rating is displayed as stars (★) based on the rating value.
             const movieElement = document.createElement('div');
-            movieElement.textContent = `Title: ${movie.title}, (${movie.year}) -\nGenre: ${movie.genre}, Rating: ${movie.totalRating / movie.ratingCount} ★\n`;
+            movieElement.textContent = `Title: ${movie.title}, (${movie.year}) -\nGenre: ${movie.genre}, Rating: ${Math.round(100*(movie.totalRating / movie.ratingCount))/100} ★\n`;
             movieElement.classList.add('movie-item');
             movieElement.style.whiteSpace = 'pre-line';
 
