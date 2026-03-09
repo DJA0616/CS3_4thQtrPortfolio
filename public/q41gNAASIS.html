@@ -59,14 +59,21 @@
 
     // Select all star buttons and initialize selected rating
     const starButtons = document.querySelectorAll('.star');
+    const titleInput = document.getElementById('title');
+    const yearInput = document.getElementById('year');
+
     let selectedRating = 0;
 
     starButtons.forEach(button => {
         button.addEventListener('click', () => {
             selectedRating = parseInt(button.getAttribute('data-value'));
             updateStarDisplay();
+            updateSubmitDisplay();
         });
     });
+
+    titleInput.addEventListener('input', updateSubmitDisplay);
+    yearInput.addEventListener('input', updateSubmitDisplay);
 
     // Function to update the star display based on the selected rating
     function updateStarDisplay() {
@@ -80,6 +87,22 @@
         });
     }
 
+    function updateSubmitDisplay() {
+        const submitButton = document.querySelector('button[type="submit"]');
+        const titleInput = document.getElementById('title');
+        const yearInput = document.getElementById('year');
+
+        const movies = JSON.parse(localStorage.getItem('movies')) || [];
+
+        let movieExists = movies.some(m => m.title === titleInput.value && m.year === yearInput.value);
+
+        if (!movieExists) {
+            submitButton.textContent = `Add Movie (Rating: ${selectedRating} stars)`;
+        } else {
+            submitButton.textContent = `Update Movie (Rating: ${selectedRating} stars)`;
+        }
+    }
+
     // Form submission handling
     const addMovieForm = document.getElementById('addMovieForm');
     addMovieForm.addEventListener('submit', (e) => {
@@ -91,18 +114,32 @@
         console.log(`Title: ${title}, Year: ${year}, Genre: ${genre}, Rating: ${selectedRating}`);
         
         const KEY = 'movies';
-        const newMovie = { title, year, genre, rating: selectedRating };
+        const newMovie = { title, year, genre, totalRating: selectedRating, ratingCount: 1 };
         let movies = JSON.parse(localStorage.getItem(KEY)) || [];
-        movies.push(newMovie);
-        localStorage.setItem(KEY, JSON.stringify(movies));
-        
-        // Clear form fields and reset star rating after submission
-        addMovieForm.reset();
-        selectedRating = 0;
-        updateStarDisplay();
 
-        // After adding a new movie, call the displayMovies function to update the movie list displayed on the page.
-        displayMovies();
+        let movieExists = movies.some(m => m.title === title && m.year === year);
+
+        if (movieExists) {
+            movies = movies.map(m => {
+                if (m.title === title && m.year === year) {
+                    return {title, year, genre, totalRating: m.totalRating + selectedRating, ratingCount: m.ratingCount + 1}; // Update existing movie
+                }
+                return m;
+            });
+
+            localStorage.setItem(KEY, JSON.stringify(movies));
+        } else {
+            movies.push(newMovie);
+            localStorage.setItem(KEY, JSON.stringify(movies));
+        }
+
+            // Clear form fields and reset star rating after submission
+            addMovieForm.reset();
+            selectedRating = 0;
+            updateStarDisplay();
+
+            // After adding a new movie, call the displayMovies function to update the movie list displayed on the page.
+            displayMovies();
     });
 
     // Function to display movies from localStorage
@@ -121,10 +158,7 @@
         movies.forEach(movie => {
             // create new div element for each movie and set its text content to display the movie's title, year, genre, and rating. The rating is displayed as stars (★) based on the rating value.
             const movieElement = document.createElement('div');
-            movieElement.textContent = `Title: ${movie.title}, (${movie.year}) -\nGenre: ${movie.genre}, Rating:`;
-            for (let i = 0; i < movie.rating; i++) {
-                movieElement.textContent += ' ★';
-            }
+            movieElement.textContent = `Title: ${movie.title}, (${movie.year}) -\nGenre: ${movie.genre}, Rating: ${movie.totalRating / movie.ratingCount} ★\n`;
             movieElement.classList.add('movie-item');
             movieElement.style.whiteSpace = 'pre-line';
 
@@ -134,10 +168,12 @@
             deleteButton.dataset.title = movie.title; // Store the title in a data attribute for identification
 
             deleteButton.addEventListener('click', () => {
-                let movies = JSON.parse(localStorage.getItem('movies')) || [];
-                movies = movies.filter(m => m.title !== deleteButton.dataset.title); // Set "movies" to the filtered array that excludes the movie with the matching title
-                localStorage.setItem('movies', JSON.stringify(movies));
-                displayMovies();
+                confirm('Are you sure you want to delete this movie?') && (() => {
+                    let movies = JSON.parse(localStorage.getItem('movies')) || [];
+                    movies = movies.filter(m => m.title !== deleteButton.dataset.title); // Set "movies" to the filtered array that excludes the movie with the matching title
+                    localStorage.setItem('movies', JSON.stringify(movies));
+                    displayMovies();
+                })();
             });
 
             movieElement.appendChild(deleteButton);
