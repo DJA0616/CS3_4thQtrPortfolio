@@ -47,7 +47,7 @@
         <div id="moviesContainer"></div>
     </section>
 
-    <footer style="text-align: center; position: fixed; width: 100%; bottom: 0; padding: 20px; background-color: #f1f1f1;">
+    <footer style="text-align: center; align-self:baseline; width: 100%; bottom: 0; padding: 20px; background-color: #f1f1f1;">
         <p>&copy; 2026 Daniel Asis.</p>
         <h2>Contact Information</h2>
         <p>Email: <a href="mailto:b2029djfasis@pshs.edu.ph">b2029djfasis@pshs.edu.ph</a></p>
@@ -112,6 +112,12 @@
         const moviesContainer = document.getElementById('moviesContainer');
         moviesContainer.innerHTML = '';
         const movies = JSON.parse(localStorage.getItem('movies')) || [];
+
+        if(movies.length === 0) {
+            moviesContainer.textContent = 'No movies added yet.';
+            return;
+        }
+
         movies.forEach(movie => {
             // create new div element for each movie and set its text content to display the movie's title, year, genre, and rating. The rating is displayed as stars (★) based on the rating value.
             const movieElement = document.createElement('div');
@@ -121,6 +127,20 @@
             }
             movieElement.classList.add('movie-item');
             movieElement.style.whiteSpace = 'pre-line';
+
+            // Delete button
+            const deleteButton = document.createElement('button');
+            deleteButton.textContent = 'Delete';
+            deleteButton.dataset.title = movie.title; // Store the title in a data attribute for identification
+
+            deleteButton.addEventListener('click', () => {
+                let movies = JSON.parse(localStorage.getItem('movies')) || [];
+                movies = movies.filter(m => m.title !== deleteButton.dataset.title); // Set "movies" to the filtered array that excludes the movie with the matching title
+                localStorage.setItem('movies', JSON.stringify(movies));
+                displayMovies();
+            });
+
+            movieElement.appendChild(deleteButton);
             moviesContainer.appendChild(movieElement);
         });
     }
