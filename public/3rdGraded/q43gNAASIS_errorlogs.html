@@ -1,0 +1,145 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width">
+  <meta name="author" content="Daniel Asis">
+  <meta name="description" content="testing and debugging">
+  <meta name="keywords" content="testing and debugging">
+  <title>CS3 </title>
+  <link href="style.css" rel="stylesheet" type="text/css" />
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Open+Sans&family=Poppins:wght@300&family=Roboto&display=swap" rel="stylesheet">
+  <link rel="icon" type="image/x-icon" href="images/favicon.ico">
+
+  <style>
+    tr:nth-child(1) ~ tr:nth-child(odd) {
+      background-color: lightgray;
+      color: black;
+    }
+    td, th {
+      padding: 10px;
+    }
+    table {
+      width: 90%;
+      margin: 0 auto;
+    }
+    caption {
+      font-size: 2em;
+      font-weight: bold;
+      padding: 10px;
+    }
+    
+  </style>
+</head>
+
+<body>
+  <header>
+    <nav>
+      <a href="q43gNAASIS.html">Table</a>
+      <a href="q43gNAASIS.html#input">Input</a>
+      <a href="q43gNAASIS.html#output">Output</a>
+    </nav>
+    
+    <h1 style="padding: 30px">Asis, Daniel Jehremiah / 9 - Sodium </h1>
+  </header>
+
+  <section id="table">
+    <table> 
+      <caption> Error Logs</caption>
+      <tr class="rColor">
+        <th> item# </th> 
+        <th> code line#<br/>CSS or JS </th> 
+        <th> Description</th>
+        <th> Correction Done</th>
+      </tr>
+      <tr>
+        <td> 1 </td> 
+        <td> JS #1 </td> 
+        <td> No function arguments passed to plotPoint function </td>
+        <td> Added function arguments (x0, y0, x, y) to plotPoint function </td>
+      </tr>
+      <tr>
+        <td> 2 </td> 
+        <td> JS #8 </td> 
+        <td> Incorrect property name for setting left position of point (was point.styleleft) </td>
+        <td> Corrected property name to point.style.left </td>
+      </tr>
+      <tr>
+        <td> 3 </td> 
+        <td> JS #9 </td> 
+        <td> Incorrect property name for setting bottom position of point (was point.stylebottom) </td>
+        <td> Corrected property name to point.style.bottom </td>
+      </tr>
+      <tr>
+        <td> 4 </td> 
+        <td> CSS #53 </td> 
+        <td> Missing position property for point class, causing the position to not be followed </td>
+        <td> Added position: absolute; to point class </td>
+      </tr>
+      <tr>
+        <td> 5 </td> 
+        <td> JS #3 </td> 
+        <td> No need to access in1 element anymore </td>
+        <td> Commented out the line accessing in1 element </td>
+      </tr>
+      <tr>
+        <td> 6 </td> 
+        <td> CSS #38 </td> 
+        <td> Incorrect hover selector for navigation links (a :hover) </td>
+        <td> Corrected selector to nav a:hover </td>
+      </tr>
+      <tr>
+        <td> 7 </td> 
+        <td> CSS #30 </td> 
+        <td> Incorrect display property for navigation links (was block causing links to stack vertically) </td>
+        <td> Corrected display property to inline-block </td>
+      </tr>
+      <tr>
+        <td> 8 </td> 
+        <td> CSS #92 </td> 
+        <td> Incorrect path for sprite image </td>
+        <td> Corrected path to images/sprites.png </td>
+      </tr>
+      <tr>
+        <td> 9 </td> 
+        <td> CSS #92 / HTML #93</td> 
+        <td> Missing icons / classes for Gmail and LinkedIn </td>
+        <td> Added icons / classes for Gmail and LinkedIn </td>
+      </tr>
+      <tr>
+        <td> 10 </td> 
+        <td> CSS #27-29, #85 </td> 
+        <td> Navigation bar and footer not fixed at the top and bottom of the page </td>
+        <td> Added position: fixed; top: 0; left: 0; to nav and position: fixed; bottom: 0; left: 0; to footer, as well as an empty div to push down the content </td>
+      </tr>
+     
+    </table>
+    <hr>
+  </section>
+  
+  <div style="height: 120px;"></div>
+   
+  <!--- anchors for socmed site are done with image sprites -->
+  <footer>
+    <a href="https://facebook.com"> 
+    <div class="icon facebook"></div>
+    </a>
+    <a href="https://twitter.com">
+    <div class="icon twitter"></div>
+    </a>
+    <a href="https://github.com">
+    <div class="icon github"></div>
+    </a>
+    <a href="https://gmail.com"> 
+    <div class="icon gmail"></div>
+    </a>
+    <a href="https://linkedin.com">
+    <div class="icon linkedin"></div>
+    </a>
+  </footer>
+ 
+</body>
+
+</html>
