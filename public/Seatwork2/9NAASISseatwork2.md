@@ -73,7 +73,7 @@ Answer: Although the page is not large enough to be scrolled, setting it to a fi
 
 - Guided Question: What is the effect of position: absolute on an element? How is it different from fixed?
 
-Answer: Absolute positioning moves it relative to its nearest ancestor. In this case, the content div has no ancestor, so it falls back to the root positioning. That means that its positioning is relative to 0, 0 on the document root. It is different from fixed because it can be scrolled, since it is not fixed to the viewport.
+Answer: Absolute positioning moves it relative to its nearest positioned (with a position property) ancestor. In this case, the content div has none, so it falls back to the root positioning. That means that its positioning is relative to 0, 0 on the document root. It is different from fixed because it can be scrolled, since it is not fixed to the viewport.
 
 ### Step 4 : (Absolute)
 
@@ -113,8 +113,16 @@ Answer: elements with higher z-index property values appear on top of elements w
 
     a. Could you summarize the differences between the CSS position values (static, relative, absolute, fixed)? 
 
+    Static positioning keeps it in the normal document flow. (top-bottom, left-right), and is affected by scrolling. Relative positioning is just like static, except it can be shifted using the positioning properties (top, bottom, left, right). Absolute positioning works like relative, but in relation to a positioned ancestor, instead of the static positioning, and finally, fixed positioning keeps the element in the same place relative to the viewport, meaning it cannot be affected by scrolling.
+
     b. How does absolute positioning depend on its parent element?
+
+    An absolute positioned element positions itself with top, bottom, left, right properties, relative not to itself like with relative positioning, but to its nearest positioned ancestor, i.e. the closest parent up its family tree that has a position property other than static. It positions itself relative to its parents padding border.
 
     c. How do you differentiate sticky from fixed (you can research on sticky)?
 
+    Sticky acts like relative positioning until you scroll past a certain threshold defined by its position properties (top: 20px for example). After that, it locks into place, becoming fixed in the viewport.
+
     d. If you were designing a webpage for a school event, how might you use positioning to highlight important information? Please give concrete examples.
+
+    I would use absolute positioning for large content boxes, to keep them exactly where I want them to be and not have them affected by document flow shenanigans. For moving elements, giving them position: relative and editing their css position property values with JS could be convenient, such as with moving cards and visuals. Sticky positioning can be used for buttons or interactable widgets that you want the user to always be able to interact with, such as with chatboxes, and fixed positioning could serve the same purpose, but with less hassle if you don't want any scrolling to occur.
