@@ -98,8 +98,16 @@ Answer: elements with higher z-index property values appear on top of elements w
 
 - Challenge: 
     * What changes that you have to do on the code that will position .notice box on the top right corner of the .content box? Please write the code on paper as well (both html and css on the part of .notice and .content).
+
+    Answer: I first changed the padding of the notice box to only affect the top and bottom of the boxes, so that there are no unwanted shifts in the right side of the notice box because of the padding. I also gave it a defined width property value of 100px. Then, i positioned it, aligning the top and the left properties.
+
     * Try to change the position of .content to relative then to fixed. What do you observed each time?
+
+    Answer: Relative moves it down closer to where it was if it were static, and fixed keeps it where it was when it was absolute, but scrolling has no effect on its position anymore.
+
     * What do you observe on about the effect of z-index on .notice and .content boxes?
+
+    Answer: Changing their z-index affects the overlapping parts of the elements. If content has a higher z-index than notice, then it will show up in front of notice, and vice versa.
 
 3. Please answer the following reflection questions (15 minutes)
 

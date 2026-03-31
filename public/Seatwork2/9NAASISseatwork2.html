@@ -38,11 +38,18 @@
     }    
     .notice {
         position: absolute;
-        top: 60px;
-        left: 400px;
+        /* top: 60px;
+        left: 400px; */
         background: orange;
-        padding: 10px;
+        /* padding: 10px; */
         z-index: 2;
+
+        /* Challenge: Place notice on the top right corner of the content box */
+        width: 100px; /* Changed width to make it more predictable to work with */
+        top: 66px; /* Same top as content to align it with the top of the content box */
+        left: 400px; /* Positioned to the right of the content box (200px left + 300px width) */
+        padding-top: 10px; /* Changed padding to make it more predictable to work with */
+        padding-bottom: 10px;
     }
   </style>
 </head>
